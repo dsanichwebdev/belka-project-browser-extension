@@ -1,11 +1,11 @@
 // src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Welcome from './components/Welcome.jsx';
+import PopupLayout from './components/PopupLayout.jsx';
 
 const App = () => (
   <div>
-    <Welcome/>
+    <PopupLayout/>
   </div>
 );
 
