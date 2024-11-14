@@ -78,7 +78,7 @@ const PopupLayout = () => (
         <StyledLogo src="icons/icon128.png" alt="Extension Icon" />
         <StyledHeading size="2">BelkaScope</StyledHeading>
       </Flex>
-      <StyledUnathorizedAvatar src="icons/unathorized-user-icon.png"/>
+      {/* <StyledUnathorizedAvatar src="icons/unathorized-user-icon.png"/> */}
     </RowFlex>
     <StyledLoginButton onClick={authenticate}>
       Авторизоваться

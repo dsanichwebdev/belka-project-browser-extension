@@ -9,9 +9,10 @@ const insertComponent = () => {
 
       productCards.forEach((card) => {
         if (!card.querySelector('.belka-scope-button-wrapper')) {
+          card.style.position = 'relative';
           const wrapper = document.createElement('div');
           wrapper.classList.add('belka-scope-button-wrapper');
-          wrapper.style.position = 'relative';
+          wrapper.style.position = 'absolute';
           card.appendChild(wrapper);
           ReactDOM.render(<ProductIconWithPanel />, wrapper);
         }
