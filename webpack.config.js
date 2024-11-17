@@ -1,50 +1,40 @@
-const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const path = require('path');  // Добавьте эту строку
 
 module.exports = {
-  entry: {
-    main: './src/index.js',
-    content: './src/content-scripts/index.js',
-  },
+  entry: './public/content-scripts/index.js',
   output: {
+    filename: 'bundle.js',
     path: path.resolve(__dirname, 'build'),
-    filename: '[name].js',
-  },
-  resolve: {
-    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)$/,  // Обработка .js и .jsx
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react',
+            ],
           },
         },
       },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
     ],
   },
+  resolve: {
+    alias: {
+      '@components': path.resolve(__dirname, 'src/components'),
+    },
+    extensions: ['.js', '.jsx'],
+  },
   plugins: [
-    new CopyWebpackPlugin({
+    new CopyPlugin({
       patterns: [
-        { from: 'public/manifest.json', to: 'manifest.json' },
-        { from: 'public/icons', to: 'icons' },
-        { from: 'src/background.js', to: 'background.js' },
+        { from: 'public/manifest.json', to: 'manifest.json' },  // Копируем manifest.json
       ],
     }),
-    new HtmlWebpackPlugin({
-      template: 'public/index.html',
-      filename: 'index.html',
-    }),
   ],
-  mode: 'production',
-  devtool: 'source-map',
 };

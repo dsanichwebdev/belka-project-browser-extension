@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@stitches/react';
-import { Heading, Box, Flex, IconButton } from '@radix-ui/themes';
+import { Heading, Flex, IconButton } from '@radix-ui/themes';
 
 const Container = styled(Flex, {
   alignItems: 'center',

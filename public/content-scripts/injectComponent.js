@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ProductIconWithPanel from '../components/ProductIconWithPanel';
+import ProductIconWithPanel from '@components/ProductIconWithPanel';
 
 const insertComponent = () => {
   const observer = new MutationObserver((mutations) => {
