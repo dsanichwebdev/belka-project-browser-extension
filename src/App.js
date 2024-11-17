@@ -3,7 +3,9 @@ import PopupLayout from './components/PopupLayout.jsx';
 
 function App() {
   return (
-   <PopupLayout/>
+    <div className='p-5'>
+    <PopupLayout/>
+   </div>
   );
 }
 

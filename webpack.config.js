@@ -1,5 +1,5 @@
 const CopyPlugin = require('copy-webpack-plugin');
-const path = require('path');  // Добавьте эту строку
+const path = require('path');
 
 module.exports = {
   entry: './public/content-scripts/index.js',
@@ -10,7 +10,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,  // Обработка .js и .jsx
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -22,6 +22,10 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      }
     ],
   },
   resolve: {
@@ -33,7 +37,7 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: 'public/manifest.json', to: 'manifest.json' },  // Копируем manifest.json
+        { from: 'public/manifest.json', to: 'manifest.json' },
       ],
     }),
   ],

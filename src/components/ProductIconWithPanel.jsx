@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { styled } from '@stitches/react';
 import { Button } from '@radix-ui/themes';
 import * as Avatar from "@radix-ui/react-avatar";
+import ProductCard from './ProductCard';
+import fakeProducts from '../fakeProducts';
 
 const SlidingPanelButton = styled(Button, {
   backgroundColor: '#ffbf00',
@@ -21,7 +23,7 @@ const SlidingPanel = styled('div', {
   position: 'fixed',
   top: '0',
   right: '-100%',
-  width: '300px',
+  width: '400px',
   height: '100%',
   backgroundColor: '#fff',
   boxShadow: '-2px 0 10px rgba(0, 0, 0, 0.2)',
@@ -35,7 +37,6 @@ const SlidingPanel = styled('div', {
 
 const ProductIconWithPanel = () => {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
-
   const panelRef = useRef(null);
   const buttonRef = useRef(null);
 
@@ -52,7 +53,6 @@ const ProductIconWithPanel = () => {
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
-
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
@@ -65,8 +65,11 @@ const ProductIconWithPanel = () => {
           <Avatar.AvatarImage src={`chrome-extension://${chrome.runtime.id}/icons/icon48.png`} />
         </Avatar.Root>
       </SlidingPanelButton>
-      <SlidingPanel ref={panelRef} className={isPanelOpen ? 'open' : ''}>
+      <SlidingPanel ref={panelRef} className={isPanelOpen ? 'open overflow-auto' : 'overflow-auto'}>
         <button onClick={togglePanel} style={{ float: 'right', fontSize: '16px' }}>✖</button>
+        {fakeProducts.map(product => (
+          <ProductCard key={product.id} prices={product.prices} name={product.name} image={product.image} />
+        ))}
       </SlidingPanel>
     </div>
   );
