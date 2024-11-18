@@ -4,6 +4,7 @@ import { Button } from '@radix-ui/themes';
 import * as Avatar from "@radix-ui/react-avatar";
 import ProductCard from './ProductCard';
 import fakeProducts from '../fakeProducts';
+import { Flex, Heading } from '@radix-ui/themes';
 
 const SlidingPanelButton = styled(Button, {
   backgroundColor: '#ffbf00',
@@ -33,6 +34,13 @@ const SlidingPanel = styled('div', {
     right: '0',
   },
   zIndex: '9999'
+});
+
+const StyledHeading = styled(Heading, {
+  marginLeft: '10px',
+  color: '#ffbf00',
+  fontSize: '16px',
+  fontWeight: 'bold',
 });
 
 const ProductIconWithPanel = () => {
@@ -67,6 +75,17 @@ const ProductIconWithPanel = () => {
       </SlidingPanelButton>
       <SlidingPanel ref={panelRef} className={isPanelOpen ? 'open overflow-auto' : 'overflow-auto'}>
         <button onClick={togglePanel} style={{ float: 'right', fontSize: '16px' }}>✖</button>
+        <div>
+        <Flex style={{ display: 'flex', alignItems: 'center' }}>
+          <img 
+            src={`chrome-extension://${chrome.runtime.id}/icons/icon48.png`}
+            alt="Logo" 
+            className="object-cover rounded-full shadow-lg"
+            style={{position: 'relative', width: '40px', height: '40px' }}
+          />
+          <StyledHeading>BelkaScope</StyledHeading>
+        </Flex>
+        </div>
         {fakeProducts.map(product => (
           <ProductCard key={product.id} prices={product.prices} name={product.name} image={product.image} />
         ))}
