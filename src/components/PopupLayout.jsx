@@ -22,7 +22,7 @@ const StyledHeading = styled(Heading, {
   marginLeft: '10px',
   color: '#ffbf00',
   fontSize: '16px',
-  fontWeight: 'medium',
+  fontWeight: 'bold',
 });
 
 const StyledLogo = styled('img', {
@@ -53,7 +53,7 @@ const StyledLoginButton = styled(IconButton, {
   justifyContent: 'center',
   cursor: 'pointer',
   fontWeight: 'bold',
-  marginTop: '15px',
+  marginTop: '6px',
   transition: 'background-color 0.3s',
   border: 'none',
   width: '100%',
@@ -76,7 +76,7 @@ const PopupLayout = () => (
     <RowFlex>
       <Flex style={{ display: 'flex', alignItems: 'center' }}>
         <StyledLogo src="icons/icon128.png" alt="Extension Icon" />
-        <StyledHeading size="2">BelkaScope</StyledHeading>
+        <StyledHeading>BelkaScope</StyledHeading>
       </Flex>
       {/* <StyledUnathorizedAvatar src="icons/unathorized-user-icon.png"/> */}
     </RowFlex>
