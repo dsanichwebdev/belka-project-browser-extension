@@ -4,14 +4,16 @@ import LikeButton from './LikeButton';
 import GoSellerIcon from './icons/GoSeller';
 
 const ProductCard = ({ prices, image, name }) => {
+  const truncatedName = name.length > 45 ? `${name.slice(0, 45)}...` : name;
+
   return (
-    <div className="flex bg-white shadow-md rounded-lg overflow-hidden w-full p-4 mt-3 min-h-fit">
+    <div style={{ minHeight: 'fit-content' }} className="flex bg-white shadow-md rounded-lg overflow-hidden w-full p-4 mt-3">
       <div className="flex-shrink-0 w-14 flex h-18 bg-gray-200 rounded-lg mr-4 ">
         <img 
           src={image} 
           alt="Product icon" 
           className="object-cover rounded-md shadow-lg"
-          style={{position: 'relative'}}
+          style={{ position: 'relative' }}
         />
       </div>
       <div className="flex flex-col w-full">
@@ -30,9 +32,9 @@ const ProductCard = ({ prices, image, name }) => {
             className="text-sm text-black font-bold overflow-hidden whitespace-normal line-clamp-2" 
             title={name}
           >
-            {name}
+            {truncatedName}
           </h2>
-          <GoSellerIcon/>
+          <GoSellerIcon />
         </div>
       </div>
     </div>
