@@ -13,17 +13,17 @@ const StyledHeading = styled(Heading, {
 
 const ProductDetailsWidget = () => {
   return (
-    <div className="bg-white shadow-2xl rounded-lg w-full mt-3 max-h-80 pt-1">
+    <div style={{boxShadow: "0 2px 16px rgba(0, 0, 0, .08)"}}className="bg-white rounded-lg w-full mt-3 max-h-80 pt-1">
       <Flex className="mx-3 my-3 p-2 shadow-md rounded-lg" style={{ display: 'flex', alignItems: 'center' }}>
         <img 
-          src={`/icons/icon48.png`}
+          src={`chrome-extension://${chrome.runtime.id}/icons/icon48.png`}
           alt="Logo" 
           className="object-cover rounded-full shadow-lg"
           style={{position: 'relative', width: '40px', height: '40px' }}
         />
         <StyledHeading>BelkaScope</StyledHeading>
       </Flex>
-      <div className="flex overflow-auto flex-col bg-white w-full p-3 max-h-60 rounded-lg">
+      <div className="flex overflow-auto flex-col bg-white w-full px-3 pb-3 max-h-60 rounded-lg">
         {fakeProducts.map(product => (
           <ProductCard key={product.id} prices={product.prices} name={product.name} image={product.image} />
         ))}
