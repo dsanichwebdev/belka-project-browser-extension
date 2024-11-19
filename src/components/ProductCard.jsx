@@ -1,7 +1,7 @@
 import React from 'react';
 import '../index.css';
 import LikeButton from './LikeButton';
-import GoSellerIcon from './GoSellerIcon';
+import GoSellerIcon from './icons/GoSeller';
 
 const ProductCard = ({ prices, image, name }) => {
   return (
