@@ -5,7 +5,7 @@ import GoSellerIcon from './GoSellerIcon';
 
 const ProductCard = ({ prices, image, name }) => {
   return (
-    <div className="flex bg-white shadow-xl rounded-lg overflow-hidden w-full p-4 mt-3">
+    <div className="flex bg-white shadow-md rounded-lg overflow-hidden w-full p-4 mt-3 min-h-fit">
       <div className="flex-shrink-0 w-14 flex h-18 bg-gray-200 rounded-lg mr-4 ">
         <img 
           src={image} 
