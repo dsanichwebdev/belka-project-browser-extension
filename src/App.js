@@ -1,5 +1,6 @@
 import './App.css';
 import PopupLayout from './components/PopupLayout.jsx';
+import React from 'react';
 
 function App() {
   return (

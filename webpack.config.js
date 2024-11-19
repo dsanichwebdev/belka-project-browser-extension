@@ -1,10 +1,15 @@
-const CopyPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  entry: './public/content-scripts/index.js',
+  entry: {
+    main: './src/index.js',
+    content: './public/content-scripts/index.js',
+  },
+
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'build'),
   },
   module: {
@@ -35,10 +40,18 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   plugins: [
-    new CopyPlugin({
+    new CopyWebpackPlugin({
       patterns: [
+        { from: 'public/icons', to: 'icons' },
+        { from: 'public/background.js', to: 'background.js' },
         { from: 'public/manifest.json', to: 'manifest.json' },
       ],
     }),
+    new HtmlWebpackPlugin({
+      template: 'public/index.html',
+      filename: 'index.html',
+    }),
   ],
+  mode: 'production',
+  devtool: 'source-map',
 };
