@@ -1,10 +1,16 @@
 import React from 'react';
 
-const GoSellerIcon = () => {
+const GoSellerIcon = ({ size = 'medium' }) => {
+  const sizes = {
+    small: 16,
+    medium: 24,
+    large: 32
+  };
+  const iconSize = sizes[size] || sizes.medium;
   return (
     <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-      width="1028.000000pt" height="1024.000000pt" viewBox="0 0 1028.000000 1024.000000"
-      preserveAspectRatio="xMidYMid meet" style={{ minWidth: '24px', minHeight: '24px', maxHeight: '24px', maxWidth: '24px' }} className=' ml-4 cursor-pointer'>
+      width={iconSize} height={iconSize} viewBox="0 0 1028.000000 1024.000000"
+      preserveAspectRatio="xMidYMid meet" style={{ minWidth: `${iconSize}px`, minHeight: `${iconSize}px`, maxHeight: `${iconSize}px`, maxWidth: `${iconSize}px` }} className='cursor-pointer'>
       <g transform="translate(0.000000,1024.000000) scale(0.100000,-0.100000)"
       fill="#000000" stroke="none">
       <path d="M4995 10185 c-60 -30 -168 -82 -240 -117 -71 -34 -253 -122 -404

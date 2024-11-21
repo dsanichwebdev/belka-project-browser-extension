@@ -8,6 +8,7 @@ const insertComponent = () => {
     mutations.forEach(() => {
       const productCards = document.querySelectorAll('.product-card__wrapper');
       const detailsWrapperRightSide = document.querySelector('.product-page__aside-sticky');
+      const detailsWrapperLeftSide = document.querySelector('.product-page__sticky-wrap');
 
       if (productCards.length) {
         productCards.forEach((card) => {
@@ -27,7 +28,15 @@ const insertComponent = () => {
         const wrapper = document.createElement('div');
         wrapper.classList.add('belka-scope-widget-wrapper-right');
         detailsWrapperRightSide.appendChild(wrapper);
-        ReactDOM.render(<ProductDetailsWidget />, wrapper);
+        ReactDOM.render(<ProductDetailsWidget view="default"/>, wrapper);
+      }
+
+      if (detailsWrapperLeftSide && !detailsWrapperLeftSide.querySelector('.belka-scope-widget-wrapper-left')) {
+        // detailsWrapperLeftSide.style.position = 'relative';
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('belka-scope-widget-wrapper-left');
+        detailsWrapperLeftSide.appendChild(wrapper);
+        ReactDOM.render(<ProductDetailsWidget view="grid"/>, wrapper);
       }
     });
   });

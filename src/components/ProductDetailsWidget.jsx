@@ -11,9 +11,12 @@ const StyledHeading = styled(Heading, {
   fontWeight: 'bold',
 });
 
-const ProductDetailsWidget = () => {
+const ProductDetailsWidget = ({ view = "default" }) => {
+  const gridStyle = view === "grid" ? "grid grid-cols-4 gap-4" : "";
+  const maxHeight = view === "grid" ? "max-h-96" : "max-h-80";
+
   return (
-    <div style={{boxShadow: "0 2px 16px rgba(0, 0, 0, .08)"}}className="bg-white rounded-lg w-full mt-3 max-h-80 pt-1">
+    <div style={{boxShadow: "0 2px 16px rgba(0, 0, 0, .08)"}} className={`bg-white rounded-lg w-full mt-3 ${maxHeight} pt-1`}>
       <Flex className="mx-3 my-3 p-2 shadow-md rounded-lg" style={{ display: 'flex', alignItems: 'center' }}>
         <img 
           src={`chrome-extension://${chrome.runtime.id}/icons/icon48.png`}
@@ -23,9 +26,9 @@ const ProductDetailsWidget = () => {
         />
         <StyledHeading>BelkaScope</StyledHeading>
       </Flex>
-      <div className="flex overflow-auto flex-col bg-white w-full px-3 pb-3 max-h-60 rounded-lg">
+      <div className={`flex overflow-auto flex-col bg-white w-full px-3 pb-3 max-h-60 rounded-lg ${gridStyle}`}>
         {fakeProducts.map(product => (
-          <ProductCard key={product.id} prices={product.prices} name={product.name} image={product.image} />
+          <ProductCard view={view} key={product.id} prices={product.prices} name={product.name} image={product.image} />
         ))}
       </div>
     </div>
