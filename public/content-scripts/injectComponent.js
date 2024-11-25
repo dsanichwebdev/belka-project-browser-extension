@@ -75,7 +75,15 @@ const wildberriesPlatform = new Platform({
   ],
 });
 
+const ozonPlatform = new Platform({
+  name: 'Ozon',
+  sideDetailsSelectors: [
+    { selector: '[data-widget="customHtml"]', className: 'belka-scope-widget-wrapper-left', widgetProps: { view: 'grid' } },
+    { selector: '[data-widget="webSale"]', className: 'belka-scope-widget-wrapper-right', widgetProps: { view: 'default' } },
+  ],
+});
+
 
 export default function insertComponent() {
-  new WidgetInserter([wildberriesPlatform]);
+  new WidgetInserter([wildberriesPlatform, ozonPlatform]);
 }

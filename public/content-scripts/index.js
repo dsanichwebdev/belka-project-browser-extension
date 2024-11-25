@@ -1,6 +1,5 @@
 import insertComponent from './injectComponent';
 
-
 const addTailwindStyles = () => {
   const link = document.createElement('link');
   link.href = 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css'; 
@@ -8,10 +7,12 @@ const addTailwindStyles = () => {
   document.head.appendChild(link);
 };
 
-if (window.location.hostname.includes('wildberries.ru')) {
-  window.onload = () => {
-    addTailwindStyles();
-    insertComponent();
-    console.log('component inserted in product cards!')
-  };
+const handlePageLoad = () => {
+  addTailwindStyles();
+  insertComponent();
+  console.log('BelkaScope extension initialized successfully!');
+};
+
+if (window.location.hostname.includes('wildberries.ru') || window.location.hostname.includes('ozon.ru')) {
+  window.onload = handlePageLoad;
 }

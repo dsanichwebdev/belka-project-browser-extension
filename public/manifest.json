@@ -22,7 +22,7 @@
   ],
   "content_scripts": [
     {
-      "matches": ["*://*.wildberries.ru/*"],
+      "matches": ["*://*.wildberries.ru/*", "*://*.ozon.ru/*"],
       "js": ["content.js"],
       "run_at": "document_idle"
     }
