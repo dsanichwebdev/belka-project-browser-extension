@@ -3,48 +3,79 @@ import ReactDOM from 'react-dom';
 import ProductIconWithPanel from '@components/ProductIconWithPanel';
 import ProductDetailsWidget from '@components/ProductDetailsWidget';
 
-const insertComponent = () => {
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach(() => {
-      const productCards = document.querySelectorAll('.product-card__wrapper');
-      const detailsWrapperRightSide = document.querySelector('.product-page__aside-sticky');
-      const detailsWrapperLeftSide = document.querySelector('.product-page__sticky-wrap');
+class WidgetInserter {
+  constructor(platforms) {
+    this.platforms = platforms;
+    this.observer = new MutationObserver(this.handleMutations.bind(this));
+    this.initObserver();
+  }
 
-      if (productCards.length) {
-        productCards.forEach((card) => {
-          if (!card.querySelector('.belka-scope-button-wrapper')) {
-            card.style.position = 'relative';
-            const wrapper = document.createElement('div');
-            wrapper.classList.add('belka-scope-button-wrapper');
-            wrapper.style.position = 'absolute';
-            card.appendChild(wrapper);
-            ReactDOM.render(<ProductIconWithPanel />, wrapper);
-          }
-        });
-      }
+  initObserver() {
+    this.observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  }
 
-      if (detailsWrapperRightSide && !detailsWrapperRightSide.querySelector('.belka-scope-widget-wrapper-right')) {
-        detailsWrapperRightSide.style.position = 'relative';
-        const wrapper = document.createElement('div');
-        wrapper.classList.add('belka-scope-widget-wrapper-right');
-        detailsWrapperRightSide.appendChild(wrapper);
-        ReactDOM.render(<ProductDetailsWidget view="default"/>, wrapper);
-      }
+  handleMutations() {
+    this.platforms.forEach((platform) => {
+      platform.insertProductIcons();
+      platform.insertSideWidgets();
+    });
+  }
+}
 
-      if (detailsWrapperLeftSide && !detailsWrapperLeftSide.querySelector('.belka-scope-widget-wrapper-left')) {
-        // detailsWrapperLeftSide.style.position = 'relative';
-        const wrapper = document.createElement('div');
-        wrapper.classList.add('belka-scope-widget-wrapper-left');
-        detailsWrapperLeftSide.appendChild(wrapper);
-        ReactDOM.render(<ProductDetailsWidget view="grid"/>, wrapper);
+class Platform {
+  constructor({ name, productCardSelector, sideDetailsSelectors, customCardFilter }) {
+    this.name = name;
+    this.productCardSelector = productCardSelector;
+    this.sideDetailsSelectors = sideDetailsSelectors;
+    this.customCardFilter = customCardFilter;
+  }
+
+  insertProductIcons() {
+    const productCards = document.querySelectorAll(this.productCardSelector);
+    productCards.forEach((card) => {
+      if (this.customCardFilter && !this.customCardFilter(card)) return;
+      if (!card.querySelector('.belka-scope-button-wrapper')) {
+        card.style.position = 'relative';
+        const wrapper = this.createWrapper('belka-scope-button-wrapper', { position: 'absolute' });
+        card.appendChild(wrapper);
+        ReactDOM.render(<ProductIconWithPanel />, wrapper);
       }
     });
-  });
+  }
 
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true,
-  });
-};
+  insertSideWidgets() {
+    this.sideDetailsSelectors.forEach(({ selector, className, widgetProps }) => {
+      const sideWrapper = document.querySelector(selector);
+      if (sideWrapper && !sideWrapper.querySelector(`.${className}`)) {
+        sideWrapper.style.position = 'relative';
+        const wrapper = this.createWrapper(className);
+        sideWrapper.appendChild(wrapper);
+        ReactDOM.render(<ProductDetailsWidget {...widgetProps} />, wrapper);
+      }
+    });
+  }
 
-export default insertComponent;
+  createWrapper(className, styles = {}) {
+    const wrapper = document.createElement('div');
+    wrapper.className = className;
+    Object.assign(wrapper.style, styles);
+    return wrapper;
+  }
+}
+
+const wildberriesPlatform = new Platform({
+  name: 'Wildberries',
+  productCardSelector: '.product-card__wrapper',
+  sideDetailsSelectors: [
+    { selector: '.product-page__aside-sticky', className: 'belka-scope-widget-wrapper-right', widgetProps: { view: 'default' } },
+    { selector: '.product-page__sticky-wrap', className: 'belka-scope-widget-wrapper-left', widgetProps: { view: 'grid' } },
+  ],
+});
+
+
+export default function insertComponent() {
+  new WidgetInserter([wildberriesPlatform]);
+}
