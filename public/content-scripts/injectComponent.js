@@ -77,6 +77,7 @@ const wildberriesPlatform = new Platform({
 
 const ozonPlatform = new Platform({
   name: 'Ozon',
+  productCardSelector: '.tile-root',
   sideDetailsSelectors: [
     { selector: '[data-widget="customHtml"]', className: 'belka-scope-widget-wrapper-left', widgetProps: { view: 'grid' } },
     { selector: '[data-widget="webSale"]', className: 'belka-scope-widget-wrapper-right', widgetProps: { view: 'default' } },
