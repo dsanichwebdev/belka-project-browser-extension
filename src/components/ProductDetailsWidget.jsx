@@ -16,7 +16,7 @@ const ProductDetailsWidget = ({ view = "default" }) => {
   const maxHeight = view === "grid" ? "max-h-96" : "max-h-80";
 
   return (
-    <div style={{boxShadow: "0 2px 16px rgba(0, 0, 0, .08)"}} className={`bg-white rounded-lg w-full mt-3 ${maxHeight} pt-1`}>
+    <div style={{boxShadow: "0 2px 16px rgba(0, 0, 0, .08)"}} className={`bg-white rounded-lg w-full max-w-2xl mt-3 ${maxHeight} pt-1`}>
       <Flex className="mx-3 my-3 p-2 shadow-md rounded-lg" style={{ display: 'flex', alignItems: 'center' }}>
         <img 
           src={`chrome-extension://${chrome.runtime.id}/icons/icon48.png`}
