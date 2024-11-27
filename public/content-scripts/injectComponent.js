@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ProductIconWithPanel from '@components/ProductIconWithPanel';
 import ProductDetailsWidget from '@components/ProductDetailsWidget';
+import ProductIconWithPopup from '@components/ProductIconWithPopup';
 
 class WidgetInserter {
   constructor(platforms) {
@@ -26,23 +27,25 @@ class WidgetInserter {
 }
 
 class Platform {
-  constructor({ name, productCardSelector, sideDetailsSelectors, customCardFilter }) {
+  constructor({ name, productCardConfigs, sideDetailsSelectors, customCardFilter }) {
     this.name = name;
-    this.productCardSelector = productCardSelector;
+    this.productCardConfigs = productCardConfigs;
     this.sideDetailsSelectors = sideDetailsSelectors;
     this.customCardFilter = customCardFilter;
   }
 
   insertProductIcons() {
-    const productCards = document.querySelectorAll(this.productCardSelector);
-    productCards.forEach((card) => {
-      if (this.customCardFilter && !this.customCardFilter(card)) return;
-      if (!card.querySelector('.belka-scope-button-wrapper')) {
-        card.style.position = 'relative';
-        const wrapper = this.createWrapper('belka-scope-button-wrapper', { position: 'absolute' });
-        card.appendChild(wrapper);
-        ReactDOM.render(<ProductIconWithPanel />, wrapper);
-      }
+    this.productCardConfigs.forEach(({ selector, component, wrapperClassName = 'belka-scope-button-wrapper' }) => {
+      const productCards = document.querySelectorAll(selector);
+      productCards.forEach((card) => {
+        if (this.customCardFilter && !this.customCardFilter(card)) return;
+        if (!card.querySelector(`.${wrapperClassName}`)) {
+          card.style.position = 'relative';
+          const wrapper = this.createWrapper(wrapperClassName, { position: 'absolute' });
+          card.appendChild(wrapper);
+          ReactDOM.render(React.createElement(component), wrapper);
+        }
+      });
     });
   }
 
@@ -68,7 +71,9 @@ class Platform {
 
 const wildberriesPlatform = new Platform({
   name: 'Wildberries',
-  productCardSelector: '.product-card__wrapper',
+  productCardConfigs: [
+    { selector: '.product-card__wrapper', component: ProductIconWithPanel },
+  ],
   sideDetailsSelectors: [
     { selector: '.product-page__aside-sticky', className: 'belka-scope-widget-wrapper-right', widgetProps: { view: 'default' } },
     { selector: '.product-page__sticky-wrap', className: 'belka-scope-widget-wrapper-left', widgetProps: { view: 'grid' } },
@@ -77,13 +82,14 @@ const wildberriesPlatform = new Platform({
 
 const ozonPlatform = new Platform({
   name: 'Ozon',
-  productCardSelector: '.tile-root',
+  productCardConfigs: [
+    { selector: '.tile-root', component: ProductIconWithPopup },
+  ],
   sideDetailsSelectors: [
     { selector: '[data-widget="customHtml"]', className: 'belka-scope-widget-wrapper-left', widgetProps: { view: 'grid' } },
     { selector: '[data-widget="webSale"]', className: 'belka-scope-widget-wrapper-right', widgetProps: { view: 'default' } },
   ],
 });
-
 
 export default function insertComponent() {
   new WidgetInserter([wildberriesPlatform, ozonPlatform]);
