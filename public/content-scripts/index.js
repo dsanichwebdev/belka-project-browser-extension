@@ -13,6 +13,9 @@ const handlePageLoad = () => {
   console.log('BelkaScope extension initialized successfully!');
 };
 
-if (window.location.hostname.includes('wildberries.ru') || window.location.hostname.includes('ozon.ru')) {
+if (window.location.hostname.includes('wildberries.ru') ||
+    window.location.hostname.includes('ozon.ru') ||
+    window.location.hostname.includes('lamoda.ru')
+  ) {
   window.onload = handlePageLoad;
 }

@@ -12,7 +12,7 @@ const StyledAvatarButton = styled('button', {
   cursor: 'pointer',
   position: 'absolute',
   top: '32px',
-  left: '16px',
+  left: '0px',
   fontSize: '16px',
   zIndex: '9',
   width: '40px',

@@ -56,7 +56,7 @@ const ProductCard = ({ prices, image, name, view }) => {
           <div className="flex flex-col w-full">
             <div className='flex justify-between items-baseline'>
               <div className='flex items-baseline'>
-                <h2 className="text-lg text-red-600 font-black">{prices.subscribers}₽</h2>
+                <h2 className="text-sm text-red-600 font-black">{prices.subscribers}₽</h2>
                 <div className='text-xs font-bold ml-1'>{prices.everyone}₽</div>
                 <div className='text-xs text-gray-400 font-bold ml-1'>
                   <strike>{prices.old}₽</strike>
@@ -66,8 +66,9 @@ const ProductCard = ({ prices, image, name, view }) => {
             </div>
             <div className='flex items-center justify-between mt-2'>
               <h2 
-                className="text-sm mr-3 text-black font-bold overflow-hidden whitespace-normal line-clamp-2" 
+                className="text-xs mr-3 text-black font-bold overflow-hidden whitespace-normal line-clamp-2" 
                 title={name}
+                style={{fontWeight: 600}}
               >
                 {truncatedName}
               </h2>

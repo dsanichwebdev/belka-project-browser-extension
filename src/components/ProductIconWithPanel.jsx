@@ -13,11 +13,14 @@ const SlidingPanelButton = styled(Button, {
   position: 'absolute',
   top: '32px',
   left: '0px',
-  padding: '8px',
   fontSize: '16px',
   zIndex: '9',
   width: '40px',
   height: '40px',
+  borderRadius: '50%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 });
 
 const SlidingPanel = styled('div', {
@@ -70,7 +73,7 @@ const ProductIconWithPanel = () => {
     <div style={{ position: 'relative' }}>
       <SlidingPanelButton ref={buttonRef} onClick={togglePanel}>
         <Avatar.Root>
-          <Avatar.AvatarImage src={`chrome-extension://${chrome.runtime.id}/icons/icon48.png`} />
+          <Avatar.AvatarImage style={{border: 'none', borderRadius: '0 10px 10px 0'}} src={`chrome-extension://${chrome.runtime.id}/icons/icon48.png`} />
         </Avatar.Root>
       </SlidingPanelButton>
       <SlidingPanel ref={panelRef} className={isPanelOpen ? 'open overflow-auto' : 'overflow-auto'}>

@@ -35,12 +35,19 @@ class Platform {
   }
 
   insertProductIcons() {
-    this.productCardConfigs.forEach(({ selector, component, wrapperClassName = 'belka-scope-button-wrapper' }) => {
+    this.productCardConfigs?.forEach(({ selector, component, wrapperClassName = 'belka-scope-button-wrapper', name
+   }) => {
       const productCards = document.querySelectorAll(selector);
       productCards.forEach((card) => {
         if (this.customCardFilter && !this.customCardFilter(card)) return;
         if (!card.querySelector(`.${wrapperClassName}`)) {
           card.style.position = 'relative';
+          if (name = 'Lamoda') {
+            const productsImages = document.querySelectorAll('.x-product-card__pic')
+            productsImages.forEach((image) => {
+              image.style.zIndex = 0
+            })
+          }
           const wrapper = this.createWrapper(wrapperClassName, { position: 'absolute' });
           card.appendChild(wrapper);
           ReactDOM.render(React.createElement(component), wrapper);
@@ -50,7 +57,7 @@ class Platform {
   }
 
   insertSideWidgets() {
-    this.sideDetailsSelectors.forEach(({ selector, className, widgetProps }) => {
+    this.sideDetailsSelectors?.forEach(({ selector, className, widgetProps }) => {
       const sideWrapper = document.querySelector(selector);
       if (sideWrapper && !sideWrapper.querySelector(`.${className}`)) {
         sideWrapper.style.position = 'relative';
@@ -91,6 +98,16 @@ const ozonPlatform = new Platform({
   ],
 });
 
+const lamodaPlatform = new Platform({
+  name: 'Lamoda',
+  productCardConfigs: [
+    { selector: '.x-product-card__link', component: ProductIconWithPopup },
+  ],
+  sideDetailsSelectors: [
+    { selector: '._stickyContainer_9cmlz_113', className: 'belka-scope-widget-wrapper-right', widgetProps: { view: 'default' } },
+  ],
+})
+
 export default function insertComponent() {
-  new WidgetInserter([wildberriesPlatform, ozonPlatform]);
+  new WidgetInserter([wildberriesPlatform, ozonPlatform, lamodaPlatform]);
 }
