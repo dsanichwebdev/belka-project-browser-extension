@@ -105,6 +105,7 @@ const lamodaPlatform = new Platform({
   ],
   sideDetailsSelectors: [
     { selector: '._stickyContainer_9cmlz_113', className: 'belka-scope-widget-wrapper-right', widgetProps: { view: 'default' } },
+    { selector: '._content_9cmlz_61', className: 'belka-scope-widget-wrapper-left', widgetProps: { view: 'grid' } },
   ],
 })
 

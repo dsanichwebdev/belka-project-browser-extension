@@ -11,28 +11,84 @@ const StyledHeading = styled(Heading, {
   fontWeight: 'bold',
 });
 
-const ProductDetailsWidget = ({ view = "default" }) => {
-  const gridStyle = view === "grid" ? "grid grid-cols-4 gap-4" : "";
-  const maxHeight = view === "grid" ? "max-h-96" : "max-h-80";
+const WidgetContainer = styled('div', {
+  boxShadow: '0 2px 16px rgba(0, 0, 0, .08)',
+  backgroundColor: 'white',
+  borderRadius: '8px',
+  width: '100%',
+  marginTop: '12px',
+  paddingTop: '4px',
+  maxHeight: '20rem',
+  variants: {
+    view: {
+      grid: {
+        maxHeight: '24rem',
+      },
+    },
+  },
+});
 
+const HeaderFlex = styled(Flex, {
+  display: 'flex',
+  alignItems: 'center',
+  margin: '0 12px',
+  padding: '8px',
+  boxShadow: '0 2px 4px rgba(0, 0, 0, .1)',
+  borderRadius: '8px',
+});
+
+const LogoImage = styled('img', {
+  objectFit: 'cover',
+  borderRadius: '9999px',
+  boxShadow: '0 4px 8px rgba(0, 0, 0, .1)',
+  position: 'relative',
+  width: '40px',
+  height: '40px',
+});
+
+const ProductsContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  backgroundColor: 'white',
+  width: '100%',
+  padding: '12px 12px 12px 12px',
+  maxHeight: '15rem',
+  borderRadius: '8px',
+  overflow: 'auto',
+  variants: {
+    view: {
+      grid: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: '16px',
+      },
+    },
+  },
+});
+
+const ProductDetailsWidget = ({ view = "default" }) => {
   return (
-    <div style={{boxShadow: "0 2px 16px rgba(0, 0, 0, .08)"}} className={`bg-white rounded-lg w-full max-w-2xl mt-3 ${maxHeight} pt-1`}>
-      <Flex className="mx-3 my-3 p-2 shadow-md rounded-lg" style={{ display: 'flex', alignItems: 'center' }}>
-        <img 
-          src={`chrome-extension://${chrome.runtime.id}/icons/icon48.png`}
+    <WidgetContainer view={view}>
+      <HeaderFlex>
+        <LogoImage 
+          src={`chrome-extension://${chrome.runtime.id}/icons/icon48.png`} 
           alt="Logo" 
-          className="object-cover rounded-full shadow-lg"
-          style={{position: 'relative', width: '40px', height: '40px' }}
         />
         <StyledHeading>BelkaScope</StyledHeading>
-      </Flex>
-      <div className={`flex overflow-auto flex-col bg-white w-full px-3 pb-3 max-h-60 rounded-lg ${gridStyle}`}>
+      </HeaderFlex>
+      <ProductsContainer view={view}>
         {fakeProducts.map(product => (
-          <ProductCard view={view} key={product.id} prices={product.prices} name={product.name} image={product.image} />
+          <ProductCard 
+            key={product.id} 
+            view={view} 
+            prices={product.prices} 
+            name={product.name} 
+            image={product.image} 
+          />
         ))}
-      </div>
-    </div>
-  )
+      </ProductsContainer>
+    </WidgetContainer>
+  );
 }
 
 export default ProductDetailsWidget;
