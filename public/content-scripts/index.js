@@ -15,7 +15,8 @@ const handlePageLoad = () => {
 
 if (window.location.hostname.includes('wildberries.ru') ||
     window.location.hostname.includes('ozon.ru') ||
-    window.location.hostname.includes('lamoda.ru')
+    window.location.hostname.includes('lamoda.ru') ||
+    window.location.hostname.includes('market.yandex.ru')
   ) {
   window.onload = handlePageLoad;
 }

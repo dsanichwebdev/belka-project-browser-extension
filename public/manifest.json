@@ -27,7 +27,7 @@
   ],
   "content_scripts": [
     {
-      "matches": ["*://*.wildberries.ru/*", "*://*.ozon.ru/*", "*://*.lamoda.ru/*"],
+      "matches": ["*://*.wildberries.ru/*", "*://*.ozon.ru/*", "*://*.lamoda.ru/*", "*://market.yandex.ru/*"],
       "js": ["content.js"],
       "run_at": "document_idle"
     }
