@@ -4,52 +4,47 @@ import ProductIconWithPanel from '@components/ProductIconWithPanel';
 import ProductDetailsWidget from '@components/ProductDetailsWidget';
 import ProductIconWithPopup from '@components/ProductIconWithPopup';
 
-class WidgetInserter {
+class WidgetManager {
   constructor(platforms) {
     this.platforms = platforms;
-    this.observer = new MutationObserver(this.handleMutations.bind(this));
-    this.initObserver();
+    this.mutationObserver = new MutationObserver(this.handleDomChanges.bind(this));
+    this.setupObserver();
   }
 
-  initObserver() {
-    this.observer.observe(document.body, {
+  setupObserver() {
+    this.mutationObserver.observe(document.body, {
       childList: true,
       subtree: true,
     });
   }
 
-  handleMutations() {
-    this.platforms.forEach((platform) => {
-      platform.insertProductIcons();
-      platform.insertSideWidgets();
+  handleDomChanges() {
+    this.platforms.forEach(platform => {
+      platform.renderProductIcons();
+      platform.renderSideWidgets();
     });
   }
 }
 
 class Platform {
-  constructor({ name, productCardConfigs, sideDetailsSelectors, customCardFilter }) {
+  constructor({ name, productCardConfigurations, sideWidgetSelectors, customCardFilter }) {
     this.name = name;
-    this.productCardConfigs = productCardConfigs;
-    this.sideDetailsSelectors = sideDetailsSelectors;
+    this.productCardConfigurations = productCardConfigurations;
+    this.sideWidgetSelectors = sideWidgetSelectors;
     this.customCardFilter = customCardFilter;
   }
 
-  insertProductIcons() {
-    this.productCardConfigs?.forEach(({ selector, component, wrapperClassName = 'belka-scope-button-wrapper', name }) => {
+  renderProductIcons() {
+    this.productCardConfigurations?.forEach(({ selector, component, wrapperClassName = 'product-icon-wrapper', platformName }) => {
       const selectors = Array.isArray(selector) ? selector : [selector];
-      
+
       selectors.forEach(sel => {
         const productCards = document.querySelectorAll(sel);
-        productCards.forEach((card) => {
+        productCards.forEach(card => {
           if (this.customCardFilter && !this.customCardFilter(card)) return;
+
           if (!card.querySelector(`.${wrapperClassName}`)) {
-            card.style.position = 'relative';
-            if (name === 'Lamoda') {
-              const productsImages = document.querySelectorAll('.x-product-card__pic');
-              productsImages.forEach((image) => {
-                image.style.zIndex = 0;
-              });
-            }
+            this.adjustCardForPlatform(card, platformName);
             const wrapper = this.createWrapper(wrapperClassName, { position: 'absolute' });
             card.appendChild(wrapper);
             ReactDOM.render(React.createElement(component), wrapper);
@@ -59,8 +54,18 @@ class Platform {
     });
   }
 
-  insertSideWidgets() {
-    this.sideDetailsSelectors?.forEach(({ selector, className, widgetProps }) => {
+  adjustCardForPlatform(card, platformName) {
+    if (platformName === 'Lamoda') {
+      const productImages = document.querySelectorAll('.x-product-card__pic');
+      productImages.forEach(image => {
+        image.style.zIndex = 0;
+      });
+    }
+    card.style.position = 'relative';
+  }
+
+  renderSideWidgets() {
+    this.sideWidgetSelectors?.forEach(({ selector, className, widgetProps }) => {
       const sideWrapper = document.querySelector(selector);
       if (sideWrapper && !sideWrapper.querySelector(`.${className}`)) {
         sideWrapper.style.position = 'relative';
@@ -79,50 +84,53 @@ class Platform {
   }
 }
 
+// Platform configurations
 const wildberriesPlatform = new Platform({
   name: 'Wildberries',
-  productCardConfigs: [
-    { selector: '.product-card__wrapper', component: ProductIconWithPanel },
+  productCardConfigurations: [
+    { selector: '.product-card__wrapper', component: ProductIconWithPanel, platformName: 'Wildberries' },
   ],
-  sideDetailsSelectors: [
-    { selector: '.product-page__aside-sticky', className: 'belka-scope-widget-wrapper-right', widgetProps: { view: 'default' } },
-    { selector: '.product-page__sticky-wrap', className: 'belka-scope-widget-wrapper-left', widgetProps: { view: 'grid' } },
+  sideWidgetSelectors: [
+    { selector: '.product-page__aside-sticky', className: 'product-widget-right', widgetProps: { view: 'default' } },
+    { selector: '.product-page__sticky-wrap', className: 'product-widget-left', widgetProps: { view: 'grid' } },
   ],
 });
 
 const ozonPlatform = new Platform({
   name: 'Ozon',
-  productCardConfigs: [
-    { selector: '.tile-root', component: ProductIconWithPopup },
+  productCardConfigurations: [
+    { selector: '.tile-root', component: ProductIconWithPopup, platformName: 'Ozon' },
   ],
-  sideDetailsSelectors: [
-    { selector: '[data-widget="customHtml"]', className: 'belka-scope-widget-wrapper-left', widgetProps: { view: 'grid' } },
-    { selector: '[data-widget="webSale"]', className: 'belka-scope-widget-wrapper-right', widgetProps: { view: 'default' } },
+  sideWidgetSelectors: [
+    { selector: '[data-widget="customHtml"]', className: 'product-widget-left', widgetProps: { view: 'grid' } },
+    { selector: '[data-widget="webSale"]', className: 'product-widget-right', widgetProps: { view: 'default' } },
   ],
 });
 
 const lamodaPlatform = new Platform({
   name: 'Lamoda',
-  productCardConfigs: [
-    { selector: '.x-product-card__link', component: ProductIconWithPopup },
+  productCardConfigurations: [
+    { selector: '.x-product-card__link', component: ProductIconWithPopup, platformName: 'Lamoda' },
   ],
-  sideDetailsSelectors: [
-    { selector: '._stickyContainer_9cmlz_113', className: 'belka-scope-widget-wrapper-right', widgetProps: { view: 'default' } },
-    { selector: '._content_9cmlz_61', className: 'belka-scope-widget-wrapper-left', widgetProps: { view: 'grid' } },
+  sideWidgetSelectors: [
+    { selector: '._stickyContainer_9cmlz_113', className: 'product-widget-right', widgetProps: { view: 'default' } },
+    { selector: '._content_9cmlz_61', className: 'product-widget-left', widgetProps: { view: 'grid' } },
   ],
-})
+});
 
 const yandexMarketPlatform = new Platform({
   name: 'YandexMarket',
-  productCardConfigs: [
-    // { selector: 'a[href*="https://market.yandex.ru/product--"]', component: ProductIconWithPanel },
+  productCardConfigurations: [
+    // Uncomment and configure once implemented
+    // { selector: 'a[href*="https://market.yandex.ru/product--"]', component: ProductIconWithPanel, platformName: 'YandexMarket' },
   ],
-  sideDetailsSelectors: [
-    { selector: '#cardAddButton', className: 'belka-scope-widget-wrapper-right', widgetProps: { view: 'default' } },
-    { selector: '#\\/content\\/page\\/fancyPage\\/defaultPage\\/kkmCarousel\\/kkmCarousel\\/content', className: 'belka-scope-widget-wrapper-left', widgetProps: { view: 'grid' } },
+  sideWidgetSelectors: [
+    { selector: '#cardAddButton', className: 'product-widget-right', widgetProps: { view: 'default' } },
+    { selector: '#\\/content\\/page\\/fancyPage\\/defaultPage\\/kkmCarousel\\/kkmCarousel\\/content', className: 'product-widget-left', widgetProps: { view: 'grid' } },
   ],
-})
+});
 
-export default function insertComponent() {
-  new WidgetInserter([wildberriesPlatform, ozonPlatform, lamodaPlatform, yandexMarketPlatform]);
+// Main function to initialize widget insertion
+export default function initializeWidgets() {
+  new WidgetManager([wildberriesPlatform, ozonPlatform, lamodaPlatform, yandexMarketPlatform]);
 }
