@@ -35,23 +35,26 @@ class Platform {
   }
 
   insertProductIcons() {
-    this.productCardConfigs?.forEach(({ selector, component, wrapperClassName = 'belka-scope-button-wrapper', name
-   }) => {
-      const productCards = document.querySelectorAll(selector);
-      productCards.forEach((card) => {
-        if (this.customCardFilter && !this.customCardFilter(card)) return;
-        if (!card.querySelector(`.${wrapperClassName}`)) {
-          card.style.position = 'relative';
-          if (name = 'Lamoda') {
-            const productsImages = document.querySelectorAll('.x-product-card__pic')
-            productsImages.forEach((image) => {
-              image.style.zIndex = 0
-            })
+    this.productCardConfigs?.forEach(({ selector, component, wrapperClassName = 'belka-scope-button-wrapper', name }) => {
+      const selectors = Array.isArray(selector) ? selector : [selector];
+      
+      selectors.forEach(sel => {
+        const productCards = document.querySelectorAll(sel);
+        productCards.forEach((card) => {
+          if (this.customCardFilter && !this.customCardFilter(card)) return;
+          if (!card.querySelector(`.${wrapperClassName}`)) {
+            card.style.position = 'relative';
+            if (name === 'Lamoda') {
+              const productsImages = document.querySelectorAll('.x-product-card__pic');
+              productsImages.forEach((image) => {
+                image.style.zIndex = 0;
+              });
+            }
+            const wrapper = this.createWrapper(wrapperClassName, { position: 'absolute' });
+            card.appendChild(wrapper);
+            ReactDOM.render(React.createElement(component), wrapper);
           }
-          const wrapper = this.createWrapper(wrapperClassName, { position: 'absolute' });
-          card.appendChild(wrapper);
-          ReactDOM.render(React.createElement(component), wrapper);
-        }
+        });
       });
     });
   }
