@@ -112,7 +112,7 @@ const lamodaPlatform = new Platform({
 const yandexMarketPlatform = new Platform({
   name: 'YandexMarket',
   productCardConfigs: [
-    { selector: 'a[href*="https://market.yandex.ru/product--"]', component: ProductIconWithPanel },
+    // { selector: 'a[href*="https://market.yandex.ru/product--"]', component: ProductIconWithPanel },
   ],
   sideDetailsSelectors: [
     { selector: '#cardAddButton', className: 'belka-scope-widget-wrapper-right', widgetProps: { view: 'default' } },
