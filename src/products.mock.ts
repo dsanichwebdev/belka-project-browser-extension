@@ -1,4 +1,4 @@
-const fakeProducts = [
+const data = [
   {
     id: 1,
     name: "Раствор для контактных линз ACUVUE RevitaLens 300 мл",
@@ -49,4 +49,4 @@ const fakeProducts = [
   },
 ];
 
-export default fakeProducts;
+export default data;

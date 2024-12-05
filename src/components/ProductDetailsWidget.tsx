@@ -1,8 +1,23 @@
 import React from "react";
 import ProductCard from "./ProductCard";
-import fakeProducts from "../fakeProducts";
+import data from "../products.mock";
 import { Flex, Heading } from "@radix-ui/themes";
 import { styled } from "@stitches/react";
+
+interface Product {
+  id: string | number;
+  name: string;
+  image: string;
+  prices: {
+    subscribers: number;
+    everyone: number;
+    old: number;
+  };
+}
+
+interface ProductDetailsWidgetProps {
+  view?: "grid" | "default";
+}
 
 const StyledHeading = styled(Heading, {
   marginLeft: '10px',
@@ -24,6 +39,9 @@ const WidgetContainer = styled('div', {
       grid: {
         maxHeight: '24rem',
       },
+      default: {
+        maxHeight: '20rem',
+      }
     },
   },
 });
@@ -62,28 +80,32 @@ const ProductsContainer = styled('div', {
         gridTemplateColumns: 'repeat(4, 1fr)',
         gap: '16px',
       },
+      default: {
+        display: 'flex',
+        flexDirection: 'column',
+      }
     },
   },
 });
 
-const ProductDetailsWidget = ({ view = "default" }) => {
+const ProductDetailsWidget: React.FC<ProductDetailsWidgetProps> = ({ view = "default" }) => {
   return (
     <WidgetContainer view={view}>
       <HeaderFlex>
-        <LogoImage 
-          src={`chrome-extension://${chrome.runtime.id}/icons/icon48.png`} 
-          alt="Logo" 
+        <LogoImage
+          src={`chrome-extension://${chrome.runtime.id}/icons/icon48.png`}
+          alt="Logo"
         />
         <StyledHeading>BelkaScope</StyledHeading>
       </HeaderFlex>
       <ProductsContainer view={view}>
-        {fakeProducts.map(product => (
-          <ProductCard 
-            key={product.id} 
-            view={view} 
-            prices={product.prices} 
-            name={product.name} 
-            image={product.image} 
+        {data.map((product: Product) => (
+          <ProductCard
+            key={String(product.id)}
+            view={view}
+            prices={product.prices}
+            name={product.name}
+            image={product.image}
           />
         ))}
       </ProductsContainer>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { styled } from '@stitches/react';
 import { Heading, Flex, IconButton } from '@radix-ui/themes';
-import ProductDetailsWidget from './ProductDetailsWidget';
 
 const Container = styled(Flex, {
   alignItems: 'center',
@@ -41,7 +40,7 @@ const StyledUnathorizedAvatar = styled('img', {
   objectFit: 'cover',
   display: 'flex',
   background: '#f0f0f0',
-  padding: '5px'
+  padding: '5px',
 });
 
 const StyledLoginButton = styled(IconButton, {
@@ -65,14 +64,17 @@ const StyledLoginButton = styled(IconButton, {
 
   '&:active': {
     backgroundColor: '#cc9200',
-  }
+  },
 });
 
-const authenticate = () => {
-  console.log('authenticate!')
+const authenticate = (): void => {
+  console.log('authenticate!');
+};
+
+interface PopupLayoutProps {
 }
 
-const PopupLayout = () => (
+const PopupLayout: React.FC<PopupLayoutProps> = () => (
   <Container>
     <RowFlex>
       <Flex style={{ display: 'flex', alignItems: 'center' }}>

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 
-const LikeButton = ({ size = 'medium' }) => {
+interface LikeButtonProps {
+  size?: 'small' | 'medium' | 'large';
+}
+
+const LikeButton: React.FC<LikeButtonProps> = ({ size = 'medium' }) => {
   const [isFavorited, setIsFavorited] = useState(false);
 
   const toggleFavorite = () => {
