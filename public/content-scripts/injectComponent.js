@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ProductIconWithPanel from '@components/ProductIconWithPanel';
-import ProductDetailsWidget from '@components/ProductDetailsWidget';
-import ProductIconWithPopup from '@components/ProductIconWithPopup';
+import { ProductIconWithPanel, ProductDetailsWidget, ProductIconWithPopup } from '@components';
 
 class WidgetManager {
   constructor(platforms) {

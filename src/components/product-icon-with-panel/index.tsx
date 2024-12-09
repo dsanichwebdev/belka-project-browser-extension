@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { styled } from '@stitches/react';
 import { Button } from '@radix-ui/themes';
 import * as Avatar from "@radix-ui/react-avatar";
-import ProductCard from './ProductCard';
-import data from '../products.mock';
+import { ProductCard } from '@components/product-card';
+import data from '../../products.mock';
 import { Flex, Heading } from '@radix-ui/themes';
 
 interface Product {
@@ -57,7 +57,7 @@ const StyledHeading = styled(Heading, {
   fontWeight: 'bold',
 });
 
-const ProductIconWithPanel: React.FC = () => {
+export const ProductIconWithPanel: React.FC = () => {
   const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false);
 
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -123,5 +123,3 @@ const ProductIconWithPanel: React.FC = () => {
     </div>
   );
 };
-
-export default ProductIconWithPanel;

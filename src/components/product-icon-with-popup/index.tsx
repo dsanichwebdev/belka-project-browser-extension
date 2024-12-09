@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { styled } from '@stitches/react';
 import * as Avatar from "@radix-ui/react-avatar";
 import { Popover, PopoverTrigger, PopoverContent, PopoverArrow } from '@radix-ui/react-popover';
-import ProductCard from './ProductCard';
-import data from '../products.mock';
+import { ProductCard } from '@components/product-card';
+import data from '../../products.mock';
 import { Flex, Heading } from '@radix-ui/themes';
 
 interface Product {
@@ -52,7 +52,7 @@ const PopoverContentWrapper = styled(PopoverContent, {
   border: '1px solid #ddd',
 });
 
-const ProductIconWithPopup: React.FC = () => {
+export const ProductIconWithPopup: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
@@ -93,5 +93,3 @@ const ProductIconWithPopup: React.FC = () => {
     </Popover>
   );
 };
-
-export default ProductIconWithPopup;

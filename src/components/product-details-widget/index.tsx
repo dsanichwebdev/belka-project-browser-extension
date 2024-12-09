@@ -1,6 +1,6 @@
 import React from "react";
-import ProductCard from "./ProductCard";
-import data from "../products.mock";
+import { ProductCard } from "@components/product-card";
+import data from "../../products.mock";
 import { Flex, Heading } from "@radix-ui/themes";
 import { styled } from "@stitches/react";
 
@@ -91,7 +91,7 @@ const ProductsContainer = styled('div', {
   },
 });
 
-const ProductDetailsWidget: React.FC<ProductDetailsWidgetProps> = ({ view = "default" }) => {
+export const ProductDetailsWidget: React.FC<ProductDetailsWidgetProps> = ({ view = "default" }) => {
   return (
     <WidgetContainer view={view}>
       <HeaderFlex>
@@ -115,5 +115,3 @@ const ProductDetailsWidget: React.FC<ProductDetailsWidgetProps> = ({ view = "def
     </WidgetContainer>
   );
 }
-
-export default ProductDetailsWidget;

@@ -4,7 +4,7 @@ interface GoSellerIconProps {
   size?: 'small' | 'medium' | 'large';
 }
 
-const GoSellerIcon: React.FC<GoSellerIconProps> = ({ size = 'medium' }) => {
+export const GoSellerIcon: React.FC<GoSellerIconProps> = ({ size = 'medium' }) => {
   const sizes = {
     small: 16,
     medium: 24,
@@ -109,5 +109,3 @@ const GoSellerIcon: React.FC<GoSellerIconProps> = ({ size = 'medium' }) => {
   </svg>
   );
 };
-
-export default GoSellerIcon;

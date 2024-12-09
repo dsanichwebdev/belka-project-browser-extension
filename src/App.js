@@ -1,5 +1,5 @@
 import './App.css';
-import PopupLayout from './components/PopupLayout.tsx';
+import PopupLayout from './layouts/PopupLayout.tsx';
 import React from 'react';
 
 function App() {
