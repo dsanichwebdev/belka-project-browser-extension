@@ -27,12 +27,12 @@ const StyledHeading = styled(Heading, {
 });
 
 const WidgetContainer = styled('div', {
+  position: 'relative',
   boxShadow: '0 2px 16px rgba(0, 0, 0, .08)',
   backgroundColor: 'white',
   borderRadius: '8px',
   width: '100%',
   marginTop: '12px',
-  paddingTop: '4px',
   maxHeight: '20rem',
   variants: {
     view: {
@@ -49,10 +49,12 @@ const WidgetContainer = styled('div', {
 const HeaderFlex = styled(Flex, {
   display: 'flex',
   alignItems: 'center',
-  margin: '0 12px',
-  padding: '8px',
-  boxShadow: '0 2px 4px rgba(0, 0, 0, .1)',
   borderRadius: '8px',
+  position: 'sticky',
+  width: '100%',
+  top: '0',
+  boxShadow: '0px 0px 15px 2px rgba(34, 60, 80, 0.1)',
+  padding: '8px'
 });
 
 const LogoImage = styled('img', {
@@ -62,6 +64,7 @@ const LogoImage = styled('img', {
   position: 'relative',
   width: '40px',
   height: '40px',
+  border: 'none !important',
 });
 
 const ProductsContainer = styled('div', {
@@ -69,7 +72,7 @@ const ProductsContainer = styled('div', {
   flexDirection: 'column',
   backgroundColor: 'white',
   width: '100%',
-  padding: '12px 12px 12px 12px',
+  padding: '0 12px 12px 12px',
   maxHeight: '15rem',
   borderRadius: '8px',
   overflow: 'auto',
